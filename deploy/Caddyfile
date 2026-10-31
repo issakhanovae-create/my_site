@@ -1,0 +1,30 @@
+# Шаблон для публичного запуска elmira-site за Caddy — проще в настройке,
+# чем nginx, TLS-сертификат Caddy получает и продлевает сам.
+#
+# Оговорка: встроенного rate-limit в Caddy нет — нужен community-плагин
+# caddy-ratelimit (https://github.com/mholt/caddy-ratelimit), который требует
+# сборки через xcaddy. Если не хотите с этим связываться — используйте
+# deploy/nginx.conf, там лимит встроенный из коробки.
+#
+# Запуск:  caddy run --config deploy/Caddyfile
+# Замените example.com на свой домен.
+#
+# После этого в .env сайта: BIND_HOST=127.0.0.1 (или в Docker — порт публикуется
+# только на 127.0.0.1, см. docker-compose.yml), TRUST_PROXY=1.
+
+example.com {
+	encode gzip
+
+	request_body {
+		max_size 8MB
+	}
+
+	reverse_proxy 127.0.0.1:8765 {
+		# Перезаписывает X-Forwarded-For/X-Real-IP значением, которое сам
+		# видит от клиента — клиент не может подделать заголовок и обойти
+		# rate-limit приложения.
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Real-IP {remote_host}
+		header_up Host {host}
+	}
+}

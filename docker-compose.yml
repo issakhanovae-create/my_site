@@ -1,0 +1,37 @@
+# Полный стек: сборка фронта + Node CRM/API в одном контейнере.
+#
+# Запуск:   start.bat   |  docker compose up -d --build
+# Стоп:     stop.bat    |  docker compose down
+# Сайт:     http://127.0.0.1:8765
+# Админка:  http://127.0.0.1:8765/admin
+# Без Docker: start-local.bat (закройте Docker на 8765)
+# БД: volume crm-data; импорт/экспорт — docker-import-data.bat / docker-export-data.bat
+
+services:
+  app:
+    build: .
+    image: elmira-site:latest
+    container_name: elmira-site
+    # tini как PID 1: корректный SIGTERM/SIGINT → чистая остановка SQLite
+    init: true
+    stop_grace_period: 20s
+    ports:
+      # Публикуем ТОЛЬКО на localhost хоста: "8765:8765" открыло бы порт на
+      # всех интерфейсах машины в обход BIND_HOST (внутри контейнера он и так
+      # 0.0.0.0, иначе Docker не прокинет порт наружу). Для публичного доступа
+      # ставьте перед контейнером reverse proxy + TLS — см. DEPLOY.md.
+      - "127.0.0.1:8765:8765"
+    env_file:
+      - .env
+    environment:
+      BIND_HOST: "0.0.0.0"
+      PORT: "8765"
+    volumes:
+      # Linux-volume внутри Docker — стабильный SQLite (WAL)
+      - crm-data:/app/data
+      # Картинки сайта и загруженные фото товаров с хоста
+      - ./img:/app/img
+    restart: unless-stopped
+
+volumes:
+  crm-data:

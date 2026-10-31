@@ -1,0 +1,49 @@
+# secrets & local env
+.env
+.env.*
+!.env.example
+
+# runtime DB / backups / local data dumps
+data/crm.db
+data/crm.db-*
+data/crm.db-wal
+data/crm.db-shm
+data/*.db
+data/*.sqlite
+data/*.sqlite-*
+data/backups/
+data/products.json.tmp
+data/products.json.migrated
+
+# generated exports
+exports/
+
+# deps & build
+node_modules/
+dist/
+.vite/
+
+# IDE / agent
+.claude/
+.cursor/
+
+# keys / certs (if ever added)
+*.pem
+*.key
+*.p12
+*.pfx
+
+# local audit / TZ docs (not site code)
+ОТЧЁТ*
+ОТЧЕТ*
+ТЗ-*
+img/отчёт/
+img/отчет/
+
+# OS / logs / temp
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log
+*.tmp
+*.docx

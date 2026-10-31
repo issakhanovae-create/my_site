@@ -1,0 +1,53 @@
+# deps & build
+node_modules
+dist
+.vite
+
+# secrets & local env
+.env
+.env.*
+!.env.example
+
+# runtime data (монтируется volume'ом)
+data/crm.db
+data/crm.db-*
+data/crm.db-wal
+data/crm.db-shm
+data/backups
+data/*.tmp
+data/*.migrated
+
+# git / IDE / отчёты
+.git
+.claude
+.cursor
+*.md
+*.html
+!index.html
+ОТЧЁТ*
+ОТЧЕТ*
+ТЗ-*
+exports
+
+# prove / verify (локальные тесты)
+_prove_*.cjs
+_verify_*.cjs
+_export_*.mjs
+_docker_audit.cjs
+_check_procs.sh
+docker-import-data.bat
+
+# OS junk
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+start.bat
+start-local.bat
+start-docker.bat
+stop.bat
+docker-import-data.bat
+docker-export-data.bat

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "e4067a65ad48",
+    "name": "сюжет",
+    "price": 200000,
+    "currency": "KZT",
+    "kind": "услуга",
+    "quantity": 20,
+    "stock": -1,
+    "description": "Съемка информационного сюжета",
+    "image": ""
+  },
+  {
+    "id": "abbba9f3e505",
+    "name": "Съемка рилс",
+    "price": 500000,
+    "currency": "RUB",
+    "kind": "услуга",
+    "quantity": 20,
+    "stock": -1,
+    "description": "",
+    "image": "img/shop/123225c8ebb86768.png"
+  }
+]
